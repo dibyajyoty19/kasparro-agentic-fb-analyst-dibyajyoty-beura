@@ -1,14 +1,14 @@
 data:
-  path: "data/synthetic_fb_ads_undergarments.csv"
-  date_column: "date"
+  path: "data/synthetic_fb_ads_undergarments.csv"   # dataset location
+  date_column: "date"                               # convert to datetime
 
 analysis:
-  low_ctr_threshold: 0.015       # 1.5% CTR threshold to identify weak creatives
-  roas_drop_threshold_pct: 0.20   # 20% drop considered significant
-  compare_days: 7                 # for week-over-week analysis
+  low_ctr_threshold: 0.015        # CTR < 1.5% = poor performance
+  roas_drop_threshold_pct: 0.20   # ROAS drop > 20% considered significant
+  compare_days: 7                 # week-over-week comparison window
 
 random:
-  seed: 42
+  seed: 42                        # reproducibility
 
 output:
   reports_dir: "reports"
@@ -18,4 +18,4 @@ output:
   report_file: "reports/report.md"
 
 mode:
-  use_sample: false
+  use_sample: false               # full dataset
