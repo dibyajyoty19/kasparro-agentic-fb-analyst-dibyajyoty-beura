@@ -8,15 +8,17 @@ Built as part of the **Kasparro Applied AI Engineer Assignment**.
 ## 🚀 Quick Start
 
 ```bash
-python -V  # should be >= 3.10
+python -V  #should be >= 3.10
 
-# Create and activate virtual environment
+#Create and activate virtual environment
 python -m venv .venv
-.venv\Scripts\activate  # Windows
-# source .venv/bin/activate  # macOS / Linux
+#Windows
+.venv\Scripts\activate
+#macOS / Linux
+#source .venv/bin/activate
 
 pip install -r requirements.txt
 
-# Run analysis
+#Run analysis
 python run.py "Analyze ROAS drop"
-# PR Self Review branch preparation note
+#PR Self Review branch preparation note
