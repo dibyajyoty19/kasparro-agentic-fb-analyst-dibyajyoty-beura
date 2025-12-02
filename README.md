@@ -33,7 +33,6 @@ python run.py "Analyze ROAS drop"
 - Added detailed report generation with call-to-action insights
 - Added per-agent execution logging and timing-based observability
 
-```bash
 make setup
 make run
 make test
