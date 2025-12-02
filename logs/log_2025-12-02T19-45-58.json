@@ -1,0 +1,101 @@
+[
+  {
+    "timestamp": "2025-12-02T19:45:58.993015",
+    "event_type": "RUN_START",
+    "payload": {
+      "query": "Analyze ROAS drop"
+    }
+  },
+  {
+    "timestamp": "2025-12-02T19:45:58.996012",
+    "event_type": "CONFIG_LOADED",
+    "payload": {
+      "config_path": "config/config.yaml"
+    }
+  },
+  {
+    "timestamp": "2025-12-02T19:45:59.021295",
+    "event_type": "DATA_LOADED",
+    "payload": {
+      "rows": 4500
+    }
+  },
+  {
+    "timestamp": "2025-12-02T19:45:59.022308",
+    "event_type": "PLAN_CREATED",
+    "payload": {
+      "steps": [
+        {
+          "id": "T1",
+          "description": "Load and summarize dataset",
+          "agent": "DataAgent",
+          "depends_on": []
+        },
+        {
+          "id": "T2",
+          "description": "Generate hypotheses on ROAS performance changes",
+          "agent": "InsightAgent",
+          "depends_on": [
+            "T1"
+          ]
+        },
+        {
+          "id": "T3",
+          "description": "Evaluate hypotheses using numerical validation",
+          "agent": "EvaluatorAgent",
+          "depends_on": [
+            "T2"
+          ]
+        },
+        {
+          "id": "T4",
+          "description": "Generate creative improvements for low CTR campaigns",
+          "agent": "CreativeAgent",
+          "depends_on": [
+            "T1"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "timestamp": "2025-12-02T19:45:59.037106",
+    "event_type": "DATA_SUMMARY",
+    "payload": {
+      "summary": {
+        "total_spend": 2105579.9,
+        "total_revenue": 12265700.719999999,
+        "overall_roas": 5.8253314063265895,
+        "avg_ctr": 0.013065511111111112
+      }
+    }
+  },
+  {
+    "timestamp": "2025-12-02T19:45:59.038106",
+    "event_type": "HYPOTHESES_CREATED",
+    "payload": {
+      "count": 2
+    }
+  },
+  {
+    "timestamp": "2025-12-02T19:45:59.040107",
+    "event_type": "HYPOTHESES_EVALUATED",
+    "payload": {
+      "count": 2
+    }
+  },
+  {
+    "timestamp": "2025-12-02T19:45:59.268692",
+    "event_type": "CREATIVES_GENERATED",
+    "payload": {
+      "count": 2892
+    }
+  },
+  {
+    "timestamp": "2025-12-02T19:45:59.466033",
+    "event_type": "RUN_COMPLETE",
+    "payload": {
+      "execution_time_sec": 0.47
+    }
+  }
+]

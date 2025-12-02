@@ -1,66 +1,50 @@
-from typing import List, Dict, Any
-import pandas as pd
+import numpy as np
 
 class EvaluatorAgent:
-    def __init__(self, config: dict):
+    def __init__(self, config):
         self.config = config
 
-    def evaluate(self, df: pd.DataFrame, hypotheses: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        evaluated = []
+    def adaptive_ctr_threshold(self, df):
+        return np.percentile(df["ctr"].dropna(), 20)  # bottom 20% CTR bucket
+
+    def evaluate(self, df, hypotheses):
+        results = []
+        if not hypotheses:
+            return results
+
+    # Compute ROAS drop
+        df = df.sort_values("date")
+        baseline = df["roas"].iloc[:len(df)//2].mean()
+        recent = df["roas"].iloc[len(df)//2:].mean()
+        drop_pct = (recent - baseline) / baseline
 
         for h in hypotheses:
             if h["id"] == "H1":
-                result = self._evaluate_roas_trend(df, h)
-            elif h["id"] == "H2":
-                result = self._evaluate_low_ctr(df, h)
-            else:
-                result = {**h, "is_supported": False, "confidence": 0.2, "evidence": "Not enough rule logic implemented"}
+                supported = drop_pct < -0.05  # >5% drop
+                results.append({
+                    "id": h["id"],
+                    "description": h["description"],
+                    "is_supported": supported,
+                    "confidence": abs(drop_pct),
+                    "evidence": {
+                        "baseline_roas": baseline,
+                        "recent_roas": recent,
+                        "drop_pct": drop_pct
+                    }
+                })
 
-            evaluated.append(result)
+            if h["id"] == "H2":
+                low_ctr_df = df[df["ctr"] < self.config["analysis"]["low_ctr_threshold"]]
+                supported = len(low_ctr_df) > 0
+                results.append({
+                    "id": h["id"],
+                    "description": h["description"],
+                    "is_supported": supported,
+                    "confidence": 0.85 if supported else 0.25,
+                    "evidence": {
+                        "low_ctr_rows": len(low_ctr_df)
+                    }
+                })
 
-        return evaluated
+        return results
 
-    def _evaluate_roas_trend(self, df: pd.DataFrame, h: Dict[str, Any]) -> Dict[str, Any]:
-        #Split dataset into early and late halves
-        midpoint = len(df) // 2
-        before = df.iloc[:midpoint]
-        after = df.iloc[midpoint:]
-
-        before_roas = before["revenue"].sum() / before["spend"].sum()
-        after_roas = after["revenue"].sum() / after["spend"].sum()
-
-        drop_pct = (before_roas - after_roas) / before_roas if before_roas > 0 else 0
-        threshold = self.config["analysis"]["roas_drop_threshold_pct"]
-
-        is_supported = drop_pct > threshold
-        confidence = min(1.0, max(0.0, drop_pct * 2))
-
-        return {
-            **h,
-            "is_supported": is_supported,
-            "confidence": round(confidence, 3),
-            "evidence": {
-                "before_roas": round(before_roas, 3),
-                "after_roas": round(after_roas, 3),
-                "drop_pct": round(drop_pct, 3)
-            }
-        }
-
-    def _evaluate_low_ctr(self, df: pd.DataFrame, h: Dict[str, Any]) -> Dict[str, Any]:
-        threshold = self.config["analysis"]["low_ctr_threshold"]
-        low_ctr_df = df[df["ctr"] < threshold]
-
-        is_supported = len(low_ctr_df) > 0
-        confidence = 0.85 if is_supported else 0.3
-
-        return {
-            **h,
-            "is_supported": is_supported,
-            "confidence": confidence,
-            "evidence": {
-                "low_ctr_rows": len(low_ctr_df),
-                "examples": low_ctr_df[["campaign_name", "adset_name", "ctr"]]
-                                .head(3)
-                                .to_dict(orient="records")
-            }
-        }
