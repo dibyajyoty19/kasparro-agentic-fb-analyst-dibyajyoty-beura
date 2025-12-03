@@ -1,41 +1,19 @@
-from typing import List, Dict, Any
-
 class InsightAgent:
-    def generate_hypotheses(self, data_summary: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """
-        Creates hypotheses based on observed metric changes such as ROAS and CTR trends.
-        """
+    def generate_hypotheses(self, data_summary):
+        overall_roas = data_summary["summary"]["overall_roas"]
+        trend = data_summary.get("trend", None)
 
-        hypotheses = []
-        roas_ts = data_summary.get("roas_time_series", [])
-
-        # Hypothesis 1 – ROAS trend based reasoning
-        if len(roas_ts) >= 2:
-            first = roas_ts[0]["roas"]
-            last = roas_ts[-1]["roas"]
-            change_pct = (last - first) / first if first != 0 else 0
-
-            if change_pct < 0:
-                hypotheses.append({
-                    "id": "H1",
-                    "description": "ROAS has decreased significantly over time. Possible drivers: CTR drop, creative fatigue, or inefficient spend shift.",
-                    "expected_pattern": "ROAS down and CTR or purchases also down",
-                    "change_pct": round(change_pct, 4)
-                })
-            else:
-                hypotheses.append({
-                    "id": "H1",
-                    "description": "ROAS increased or remained stable over time.",
-                    "expected_pattern": "ROAS stable/up and CTR stable",
-                    "change_pct": round(change_pct, 4)
-                })
-
-        # Hypothesis 2 – Low CTR impact on ROAS
-        if data_summary.get("low_ctr_adsets"):
-            hypotheses.append({
+        hypotheses = [
+            {
+                "id": "H1",
+                "description": "ROAS may have declined due to changes in performance metrics over time.",
+                "expected_pattern": "ROAS down and CTR or purchases also down",
+            },
+            {
                 "id": "H2",
-                "description": "Some adsets have low CTR which may be negatively affecting ROAS. Possible cause: messaging or audience mismatch.",
-                "expected_pattern": "Low CTR adsets show correlated ROAS decline."
-            })
+                "description": "Low CTR adsets may be negatively impacting ROAS. Possible messaging mismatch or creative fatigue.",
+                "expected_pattern": "Low CTR campaigns correlate with ROAS drops",
+            }
+        ]
 
         return hypotheses

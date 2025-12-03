@@ -1,40 +1,37 @@
 [
   {
     "id": "H1",
-    "description": "ROAS has decreased significantly over time. Possible drivers: CTR drop, creative fatigue, or inefficient spend shift.",
-    "expected_pattern": "ROAS down and CTR or purchases also down",
-    "change_pct": -0.1039,
-    "is_supported": "False",
-    "confidence": 0.252,
+    "description": "ROAS may have declined due to changes in performance metrics over time.",
+    "is_supported": false,
+    "confidence": 0.065,
     "evidence": {
-      "before_roas": 6.218,
-      "after_roas": 5.436,
-      "drop_pct": 0.126
+      "before_roas": 9.913968446262043,
+      "after_roas": 9.369736878056049,
+      "drop_pct": 0.054895430740572
     }
   },
   {
     "id": "H2",
-    "description": "Some adsets have low CTR which may be negatively affecting ROAS. Possible cause: messaging or audience mismatch.",
-    "expected_pattern": "Low CTR adsets show correlated ROAS decline.",
+    "description": "Low CTR adsets may be negatively impacting ROAS. Possible messaging mismatch or creative fatigue.",
     "is_supported": true,
-    "confidence": 0.85,
+    "confidence": 1.0,
     "evidence": {
       "low_ctr_rows": 3178,
       "examples": [
         {
-          "campaign_name": "Men_ComfortMax_Launch",
-          "adset_name": "Adset-1 Retarget",
-          "ctr": 0.0125
+          "campaign_name": "Women Cotton Classics",
+          "adset_name": "Adset-3 Broad",
+          "ctr": 0.0096
         },
         {
-          "campaign_name": "Men Comfortmax Launch",
-          "adset_name": "Adset-1 Retarget",
-          "ctr": 0.0131
+          "campaign_name": "WOMEN Cotton Classics",
+          "adset_name": "Adset-4 LAL2",
+          "ctr": 0.0141
         },
         {
-          "campaign_name": "MEN COMFORTMAX LAUNCH",
-          "adset_name": "Adset-1 Retarget",
-          "ctr": 0.0142
+          "campaign_name": "WOMEN SEAMLESS EVERYDAY",
+          "adset_name": "Adset-5 LAL1",
+          "ctr": 0.01
         }
       ]
     }
