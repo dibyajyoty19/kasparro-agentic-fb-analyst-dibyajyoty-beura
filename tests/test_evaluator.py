@@ -8,7 +8,7 @@ from src.agents.evaluator_agent import EvaluatorAgent
 def test_roas_drop_evaluation():
     df = pd.DataFrame({
         "spend": [100, 100],
-        "revenue": [400, 200],     # ROAS drop from 4 → 2 (50% drop)
+        "revenue": [400, 200], #ROAS drop from 4 → 2 (50% drop)
         "ctr": [0.03, 0.02]
     })
 

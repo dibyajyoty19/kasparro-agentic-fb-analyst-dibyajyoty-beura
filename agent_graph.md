@@ -1,11 +1,11 @@
 # Agent Graph — Kasparro Agentic Facebook Performance Analyst
 
-## 🎯 System Overview
+##  System Overview
 This multi-agent system autonomously analyzes Facebook Ads performance, identifies ROAS changes, evaluates hypotheses, and suggests improved creative messaging.
 
 ---
 
-## 🤖 Agent Responsibilities
+##  Agent Responsibilities
 
 | Agent | Role / Function |
 |--------|----------------|
@@ -17,21 +17,44 @@ This multi-agent system autonomously analyzes Facebook Ads performance, identifi
 
 ---
 
-## 🧠 Agent-to-Agent Communication Flow
+##  Agent-to-Agent Communication Flow
 
 ```text
-User Query
-   │
-   ▼
-Planner Agent
-   │
-   ├── T1 → Data Agent → dataset summary (ROAS trend, CTR, low CTR list)
-   │
-   ├── T2 → Insight Agent → hypotheses
-   │
-   ├── T3 → Evaluator Agent → validated hypotheses + confidence + evidence
-   │
-   └── T4 → Creative Agent → creative recommendations
-   │
-   ▼
-Orchestrator Combines Results → insights.json + creatives.json + report.md + logs
+User Query (e.g., "Analyze ROAS drop")
+
+           │
+           ▼
+     🧠 Planner Agent
+           │
+           ├─ T1: Data request → 📊 Data Agent
+           │                     │
+           │                     └── Data Summary:
+           │                         - ROAS trends
+           │                         - CTR distribution
+           │                         - Low CTR campaigns
+           │
+           ├─ T2: Insight generation → 💡 Insight Agent
+           │                           │
+           │                           └── Hypotheses (audience fatigue, creative decline, targeting mismatch)
+           │
+           ├─ T3: Validation → 📐 Evaluator Agent
+           │                     │
+           │                     └── Validated hypotheses
+           │                         - is_supported
+           │                         - evidence numbers
+           │                         - confidence score
+           │
+           └─ T4: Creative guidance → 🎨 Creative Agent
+                                     │
+                                     └── Recommendations:
+                                         - Headlines
+                                         - Messaging variants
+                                         - Call-to-action ideas
+
+           ▼
+     📦 Orchestrator Packs Outputs
+           │
+           ├── insights.json
+           ├── creatives.json
+           ├── report.md
+           └── logs/

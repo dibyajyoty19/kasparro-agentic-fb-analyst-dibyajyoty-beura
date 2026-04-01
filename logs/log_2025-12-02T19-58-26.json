@@ -1,0 +1,42 @@
+[
+  {
+    "timestamp": "2025-12-02T19:58:26.294815",
+    "event_type": "RUN_START",
+    "payload": {
+      "query": "Analyze ROAS drop"
+    }
+  },
+  {
+    "timestamp": "2025-12-02T19:58:26.297811",
+    "event_type": "CONFIG_LOADED",
+    "payload": {
+      "config_path": "config/config.yaml"
+    }
+  },
+  {
+    "timestamp": "2025-12-02T19:58:26.316813",
+    "event_type": "DATA_LOADED",
+    "payload": {
+      "rows": 4500
+    }
+  },
+  {
+    "timestamp": "2025-12-02T19:58:26.316813",
+    "event_type": "SCHEMA_VALIDATION_START",
+    "payload": {}
+  },
+  {
+    "timestamp": "2025-12-02T19:58:26.317813",
+    "event_type": "SCHEMA_VALIDATION_FAIL",
+    "payload": {
+      "error": "local variable 'data_agent' referenced before assignment"
+    }
+  },
+  {
+    "timestamp": "2025-12-02T19:58:26.318814",
+    "event_type": "CRASH",
+    "payload": {
+      "error": "local variable 'data_agent' referenced before assignment"
+    }
+  }
+]
